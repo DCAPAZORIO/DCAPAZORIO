@@ -1,0 +1,231 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "name": "Untitled3.ipynb",
+      "provenance": [],
+      "authorship_tag": "ABX9TyOEjBZXcLsq1B5LS6eKNMTw",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/DCAPAZORIO/DCAPAZORIO/blob/main/PysparkExcercise\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 6,
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "oZK5vtf0dd1C",
+        "outputId": "a42357ea-6c43-4fdb-bfe7-c6c6129a2c59"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Looking in indexes: https://pypi.org/simple, https://us-python.pkg.dev/colab-wheels/public/simple/\n",
+            "Collecting pyspark\n",
+            "  Downloading pyspark-3.2.1.tar.gz (281.4 MB)\n",
+            "\u001b[K     |████████████████████████████████| 281.4 MB 34 kB/s \n",
+            "\u001b[?25hCollecting py4j==0.10.9.3\n",
+            "  Downloading py4j-0.10.9.3-py2.py3-none-any.whl (198 kB)\n",
+            "\u001b[K     |████████████████████████████████| 198 kB 63.8 MB/s \n",
+            "\u001b[?25hBuilding wheels for collected packages: pyspark\n",
+            "  Building wheel for pyspark (setup.py) ... \u001b[?25l\u001b[?25hdone\n",
+            "  Created wheel for pyspark: filename=pyspark-3.2.1-py2.py3-none-any.whl size=281853642 sha256=d14b80a146157c4eafbe6cf9bf0bb8125606a1dc593692160046e589bdd3ead6\n",
+            "  Stored in directory: /root/.cache/pip/wheels/9f/f5/07/7cd8017084dce4e93e84e92efd1e1d5334db05f2e83bcef74f\n",
+            "Successfully built pyspark\n",
+            "Installing collected packages: py4j, pyspark\n",
+            "Successfully installed py4j-0.10.9.3 pyspark-3.2.1\n"
+          ]
+        }
+      ],
+      "source": [
+        "!pip install pyspark"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        ""
+      ],
+      "metadata": {
+        "id": "_OGygZ57d3vV"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "from pyspark.context import SparkContext\n",
+        "from pyspark.sql.session import SparkSession\n",
+        "sc = SparkContext.getOrCreate();\n",
+        "\n",
+        "spark = SparkSession(sc)\n",
+        "\n",
+        "my_data = spark.read.csv('/content/cricketsparkexample.csv', header=True)"
+      ],
+      "metadata": {
+        "id": "4z1y1_2cjF7t"
+      },
+      "execution_count": 7,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "my_data.show"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "QpNMqS_hjpg_",
+        "outputId": "1635d644-f9e9-4c72-f45c-eff32a42abb5"
+      },
+      "execution_count": 12,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "<bound method DataFrame.show of DataFrame[Batsman: string, Batsman_Name: string, Bowler: string, Bowler_Name: string, Commentary: string, Detail: string, Dismissed: string, Id: string, Isball: string, Isboundary: string, Iswicket: string, Over: string, Runs: string, Timestamp: string]>"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 12
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "my_data.printSchema()"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "Hq6id7INj3hJ",
+        "outputId": "4da027c5-e323-44b7-d4e1-26b375b6356c"
+      },
+      "execution_count": 13,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "root\n",
+            " |-- Batsman: string (nullable = true)\n",
+            " |-- Batsman_Name: string (nullable = true)\n",
+            " |-- Bowler: string (nullable = true)\n",
+            " |-- Bowler_Name: string (nullable = true)\n",
+            " |-- Commentary: string (nullable = true)\n",
+            " |-- Detail: string (nullable = true)\n",
+            " |-- Dismissed: string (nullable = true)\n",
+            " |-- Id: string (nullable = true)\n",
+            " |-- Isball: string (nullable = true)\n",
+            " |-- Isboundary: string (nullable = true)\n",
+            " |-- Iswicket: string (nullable = true)\n",
+            " |-- Over: string (nullable = true)\n",
+            " |-- Runs: string (nullable = true)\n",
+            " |-- Timestamp: string (nullable = true)\n",
+            "\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import pyspark.sql.types as tp\n",
+        "\n",
+        "my_schema = tp.StructType([\n",
+        "    tp.StructField(name= 'Batsman',      dataType= tp.IntegerType(),   nullable= True),\n",
+        "    tp.StructField(name= 'Batsman_Name', dataType= tp.StringType(),    nullable= True),\n",
+        "    tp.StructField(name= 'Bowler',       dataType= tp.IntegerType(),   nullable= True),\n",
+        "    tp.StructField(name= 'Bowler_Name',  dataType= tp.StringType(),    nullable= True),\n",
+        "    tp.StructField(name= 'Commentary',   dataType= tp.StringType(),    nullable= True),\n",
+        "    tp.StructField(name= 'Detail',       dataType= tp.StringType(),    nullable= True),\n",
+        "    tp.StructField(name= 'Dismissed',    dataType= tp.IntegerType(),   nullable= True),\n",
+        "    tp.StructField(name= 'Id',           dataType= tp.IntegerType(),   nullable= True),\n",
+        "    tp.StructField(name= 'Isball',       dataType= tp.BooleanType(),   nullable= True),\n",
+        "    tp.StructField(name= 'Isboundary',   dataType= tp.BinaryType(),   nullable= True),\n",
+        "    tp.StructField(name= 'Iswicket',     dataType= tp.BinaryType(),   nullable= True),\n",
+        "    tp.StructField(name= 'Over',         dataType= tp.DoubleType(),    nullable= True),\n",
+        "    tp.StructField(name= 'Runs',         dataType= tp.IntegerType(),   nullable= True),\n",
+        "    tp.StructField(name= 'Timestamp',    dataType= tp.TimestampType(), nullable= True)    \n",
+        "])\n",
+        "\n",
+        "# read the data again with the defined schema\n",
+        "my_data = spark.read.csv('/content/cricketsparkexample.csv',schema= my_schema,header= True)\n",
+        "\n",
+        "# print the schema\n",
+        "my_data.printSchema()\n"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "fBxIk8zpjqiX",
+        "outputId": "8976fe4b-a734-4c28-8ee0-5ff6eb91a81a"
+      },
+      "execution_count": 14,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "root\n",
+            " |-- Batsman: integer (nullable = true)\n",
+            " |-- Batsman_Name: string (nullable = true)\n",
+            " |-- Bowler: integer (nullable = true)\n",
+            " |-- Bowler_Name: string (nullable = true)\n",
+            " |-- Commentary: string (nullable = true)\n",
+            " |-- Detail: string (nullable = true)\n",
+            " |-- Dismissed: integer (nullable = true)\n",
+            " |-- Id: integer (nullable = true)\n",
+            " |-- Isball: boolean (nullable = true)\n",
+            " |-- Isboundary: binary (nullable = true)\n",
+            " |-- Iswicket: binary (nullable = true)\n",
+            " |-- Over: double (nullable = true)\n",
+            " |-- Runs: integer (nullable = true)\n",
+            " |-- Timestamp: timestamp (nullable = true)\n",
+            "\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        ""
+      ],
+      "metadata": {
+        "id": "LBo-iOT2kgwI"
+      },
+      "execution_count": null,
+      "outputs": []
+    }
+  ]
+}
